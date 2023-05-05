@@ -6,33 +6,52 @@ body {
     align-items: center;
 }
 
+.calculator {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.output {
+    width: 240px;
+    height: 50px;
+    background-color:gainsboro;
+}
+
 .inputs {
     display: flex;
-    max-width: 120px;
+    max-width: 240px;
+    max-height:fit-content;
 }
 
 .numbers {
     display: flex;
     flex-wrap: wrap;
-    width: 100px;
-}
-
-.operations {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
+    width: 200px;
+    gap: 26px;
 }
 
 #a {
-    width: 54px;
+    width: 104px;
 }
 
 .row button {
-    width: 25px;
-    height: 20px;
+    width: 50px;
+    height: 40px;
+    text-align: center;
 }
 
 .row {
     height: fit-content;
 }
 
+.operations button {
+    width: 40px;
+    height: 40px;
+}
+
+.operations {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

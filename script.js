@@ -39,4 +39,4 @@ function calculation(operant, operator, operant2) {
             return 'ERR: Calculation';
     }
     return result;
-}  
+}
