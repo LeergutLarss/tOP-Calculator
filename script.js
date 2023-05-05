@@ -1,7 +1,30 @@
 //math vars
-let firstNumber;
-let secondNumber;
-let operator;
+const input = {
+    firstNumber: "", 
+    secondNumber: "",
+    operant: "",
+}
+//HTML elements
+const operants = Array.from(document.querySelectorAll('.row button'));
+const clr = document.getElementById('clr');
+const displayElement = document.querySelector('.output');
+
+
+//Events
+operants.forEach(operant => {
+    operant.addEventListener('click',() => {
+        input.firstNumber += operant.textContent;
+        display(input);
+    })
+});
+
+clr.addEventListener('click', () => {
+    displayElement.textContent = "";
+    for (const key in input) {
+        input[key] = "";
+    }
+});
+
 
 //Operations
 function add(operant, operant2) {
@@ -39,4 +62,11 @@ function calculation(operant, operator, operant2) {
             return 'ERR: Calculation';
     }
     return result;
+}
+
+function display(input) {
+    displayElement.textContent = "";
+    for (const key in input) {
+        displayElement.textContent += input[key];
+    }
 }

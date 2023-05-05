@@ -9,13 +9,18 @@ body {
 .calculator {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
 }
 
 .output {
     width: 240px;
     height: 50px;
     background-color:gainsboro;
+}
+
+.delete button {
+    width: 104px;
+    height: 30px;
 }
 
 .inputs {
