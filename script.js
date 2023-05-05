@@ -8,17 +8,26 @@ const displayElement = document.querySelector('.output');
 
 
 //Events
+let lastInputOperator = false;
 operants.forEach(operant => {
     operant.addEventListener('click',() => {
         input.push(operant.textContent);
+        lastInputOperator = false;
         display(input);
     })
 });
 
 operators.forEach(operator => {
     operator.addEventListener('click', () => {
-        input.push(operator.textContent);
-        display(input);
+        if(operator.textContent === '=') {
+            console.log('NO');
+        } else {
+            if(!lastInputOperator) {
+                input.push(operator.textContent);
+                lastInputOperator = true;
+                display(input);
+            }
+        }
     })
 })
 
