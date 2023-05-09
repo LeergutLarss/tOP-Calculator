@@ -30,7 +30,7 @@ operators.forEach(operator => {
         }
     })
 })
-
+ 
 clr.addEventListener('click', () => {
     displayElement.textContent = "";
     input.length = 0;

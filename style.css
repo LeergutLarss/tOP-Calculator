@@ -13,9 +13,14 @@ body {
 }
 
 .output {
+    display: flex;
+    justify-content: right;
+    align-items: center;
     width: 240px;
     height: 50px;
     background-color:gainsboro;
+    font-family: 'Bruno Ace', cursive;
+    font-size: 35px;
 }
 
 .delete button {
