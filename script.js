@@ -25,7 +25,12 @@ numbers.forEach((number) => {
 operators.forEach((operat) => {
     operat.addEventListener('click', () => {
         if(operat.textContent == '=') {
-            // CALC LATORER TODO
+            input.firstValue = calc(input.firstValue, input.operator, input.secondValue);
+            input.start = true;
+            input.comma = false;
+            input.operator = "";
+            input.secondValue = "";
+            display(input);
         } else {
             if(input.operator == "") {
                 input.isFirst = false;
@@ -54,7 +59,6 @@ function numberInput(number, input) {
             input.secondValue += number;
         } 
         input.start = false;
-    console.log(input);
 }
 
 function display(input) {
@@ -62,4 +66,29 @@ function display(input) {
     output.textContent = input.firstValue;
     output.textContent += input.operator;
     output.textContent += input.secondValue;
+}
+
+
+function calc(firstValue,operator, secondValue) {
+    firstValue = Number(firstValue);
+    secondValue = Number(secondValue);
+    let result;
+    switch(operator) {
+        case('+'): 
+            result = firstValue + secondValue;
+            break;
+        case('-'):
+            result = firstValue - secondValue;
+            break;
+        case('/'):
+            result = firstValue / secondValue;
+            break;
+        case('*'):
+            result = firstValue * secondValue;
+            break;        
+    }
+    if(!Number.isInteger(result)) {
+        result.toFixed(3);
+    }
+    return result;
 }
