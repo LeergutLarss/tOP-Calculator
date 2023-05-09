@@ -6,6 +6,7 @@ const input = {
     isFirst: true,
     start: true,
     comma: false,
+    notFrst: false,
 }
 const numbers = Array.from(document.querySelectorAll('.numbers button'));
 const operators = Array.from(document.querySelectorAll('.operations button'));
@@ -13,29 +14,33 @@ const clr = document.getElementById('clr');
 //Events
 numbers.forEach((number) => {
     number.addEventListener('click', () => {
-        if(!(number.textContent == '.' && input.start) && !(number.textContent == '.' && input.comma)) {
-            if(number.textContent == '.') {
-                input.comma = true;
+        if(!input.notFrst) {
+            if(!(number.textContent == '.' && input.start) && !(number.textContent == '.' && input.comma)) {
+                if(number.textContent == '.') {
+                    input.comma = true;
+                }
+                numberInput(number.textContent, input);
+                display(input);
             }
-            numberInput(number.textContent, input);
-            display(input);
         }
     });
 });
 operators.forEach((operat) => {
     operat.addEventListener('click', () => {
-        if(operat.textContent == '=') {
+        if(operat.textContent == '=' && input.secondValue != "") {
             input.firstValue = calc(input.firstValue, input.operator, input.secondValue);
             input.start = true;
             input.comma = false;
             input.operator = "";
             input.secondValue = "";
+            input.notFrst = true;
             display(input);
         } else {
-            if(input.operator == "") {
+            if(input.operator == "" && operat.textContent != '=') {
                 input.isFirst = false;
                 input.start = true;
                 input.comma = false;
+                input.notFrst = false;
                 input.operator = operat.textContent;
                 display(input);                
             }
@@ -66,6 +71,7 @@ function display(input) {
     output.textContent = input.firstValue;
     output.textContent += input.operator;
     output.textContent += input.secondValue;
+    console.log(input);
 }
 
 
@@ -89,7 +95,6 @@ function calc(firstValue,operator, secondValue) {
     }
     if(!Number.isInteger(result)) {
         result = result.toFixed(2);
-        console.log(result);
     }
     return result;
 }
