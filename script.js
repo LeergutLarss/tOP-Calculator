@@ -88,7 +88,8 @@ function calc(firstValue,operator, secondValue) {
             break;        
     }
     if(!Number.isInteger(result)) {
-        result.toFixed(3);
+        result = result.toFixed(2);
+        console.log(result);
     }
     return result;
 }
