@@ -1,94 +1,100 @@
-//input array
-let input = [];
-//HTML elements
-const operants = Array.from(document.querySelectorAll('.row button'));
+//input
+const input = {
+    firstValue: "",
+    operator: "",
+    secondValue: "",
+    isFirst: true,
+    start: true,
+    comma: false,
+    notFrst: false,
+}
+const numbers = Array.from(document.querySelectorAll('.numbers button'));
 const operators = Array.from(document.querySelectorAll('.operations button'));
 const clr = document.getElementById('clr');
-const displayElement = document.querySelector('.output');
-
 //Events
-let lastInputOperator = true;
-operants.forEach(operant => {
-    operant.addEventListener('click',() => {
-        input.push(operant.textContent);
-        lastInputOperator = false;
-        display(input);
-    })
-});
-
-operators.forEach(operator => {
-    operator.addEventListener('click', () => {
-        if(operator.textContent === '=') {
-            console.log('NO');
-        } else {
-            if(!lastInputOperator) {
-                input.push(operator.textContent);
-                lastInputOperator = true;
-                combineInput(input);
+numbers.forEach((number) => {
+    number.addEventListener('click', () => {
+        if(!input.notFrst) {
+            if(!(number.textContent == '.' && input.start) && !(number.textContent == '.' && input.comma)) {
+                if(number.textContent == '.') {
+                    input.comma = true;
+                }
+                numberInput(number.textContent, input);
                 display(input);
+            }
+        }
+    });
+});
+operators.forEach((operat) => {
+    operat.addEventListener('click', () => {
+        if(operat.textContent == '=' && input.secondValue != "") {
+            input.firstValue = calc(input.firstValue, input.operator, input.secondValue);
+            input.start = true;
+            input.comma = false;
+            input.operator = "";
+            input.secondValue = "";
+            input.notFrst = true;
+            display(input);
+        } else {
+            if(input.operator == "" && operat.textContent != '=') {
+                input.isFirst = false;
+                input.start = true;
+                input.comma = false;
+                input.notFrst = false;
+                input.operator = operat.textContent;
+                display(input);                
             }
         }
     })
 })
-
 clr.addEventListener('click', () => {
-    displayElement.textContent = "";
-    input.length = 0;
-});
+    input.firstValue = "";
+    input.secondValue = ""; 
+    input.operator = "";
+    input.isFirst = true;
+    input.start = true;
+    input.comma = false;
+    display(input);
+})
 
-//Operations
-function add(operant, operant2) {
-    return operant + operant2;
-}
-
-function sub(operant, operant2) {
-    return operant - operant2;
-}
-
-function mul(operant, operant2) {
-    return operant * operant2;
-}
-
-function div(operant, operant2) {
-    return operant / operant2;
-}
-
-function calculation(operant, operator, operant2) {
-    let result = 0;
-    switch(operator) {
-        case('+'):
-            result = add(operant, operant2);
-            break;
-        case('-'):
-            result = sub(operant, operant2);
-            break;
-        case('*'):
-            result = mul(operant, operant2);
-            break;
-        case('/'):
-            result = div(operant, operant2);
-            break;
-        default:
-            return 'ERR: Calculation';
-    }
-    return result;
+function numberInput(number, input) {
+        if(input.isFirst) {
+            input.firstValue += number;
+        } else {
+            input.secondValue += number;
+        } 
+        input.start = false;
 }
 
 function display(input) {
-    displayElement.textContent = "";
-    input.forEach(value => {
-        displayElement.textContent += value;
-    });
+    const output = document.querySelector('.output');
+    output.textContent = input.firstValue;
+    output.textContent += input.operator;
+    output.textContent += input.secondValue;
+    console.log(input);
 }
 
-function combineInput(input) {
-    let combinedInput = "";
-    let i = 0
-    for (; i < input.length - 1; i++) {
-        combinedInput += input[i];
+
+function calc(firstValue,operator, secondValue) {
+    firstValue = Number(firstValue);
+    secondValue = Number(secondValue);
+    let result;
+    switch(operator) {
+        case('+'): 
+            result = firstValue + secondValue;
+            break;
+        case('-'):
+            result = firstValue - secondValue;
+            break;
+        case('/'):
+            result = firstValue / secondValue;
+            break;
+        case('*'):
+            result = firstValue * secondValue;
+            break;        
     }
-    for(let k = 0; k < i; k++) {
-        input.shift();
+    if(!Number.isInteger(result)) {
+        result = result.toFixed(2);
     }
-    input.unshift(`${combinedInput}`);
+    return result;
 }
