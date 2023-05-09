@@ -18,6 +18,7 @@ numbers.forEach((number) => {
                 input.comma = true;
             }
             numberInput(number.textContent, input);
+            display(input);
         }
     });
 });
@@ -30,7 +31,8 @@ operators.forEach((operat) => {
                 input.isFirst = false;
                 input.start = true;
                 input.comma = false;
-                input.operator = operat.textContent;                
+                input.operator = operat.textContent;
+                display(input);                
             }
         }
     })
@@ -42,6 +44,7 @@ clr.addEventListener('click', () => {
     input.isFirst = true;
     input.start = true;
     input.comma = false;
+    display(input);
 })
 
 function numberInput(number, input) {
@@ -52,4 +55,11 @@ function numberInput(number, input) {
         } 
         input.start = false;
     console.log(input);
+}
+
+function display(input) {
+    const output = document.querySelector('.output');
+    output.textContent = input.firstValue;
+    output.textContent += input.operator;
+    output.textContent += input.secondValue;
 }
