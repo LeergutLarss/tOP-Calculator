@@ -1,14 +1,13 @@
 //input array
-const input = [];
+let input = [];
 //HTML elements
 const operants = Array.from(document.querySelectorAll('.row button'));
 const operators = Array.from(document.querySelectorAll('.operations button'));
 const clr = document.getElementById('clr');
 const displayElement = document.querySelector('.output');
 
-
 //Events
-let lastInputOperator = false;
+let lastInputOperator = true;
 operants.forEach(operant => {
     operant.addEventListener('click',() => {
         input.push(operant.textContent);
@@ -25,12 +24,13 @@ operators.forEach(operator => {
             if(!lastInputOperator) {
                 input.push(operator.textContent);
                 lastInputOperator = true;
+                combineInput(input);
                 display(input);
             }
         }
     })
 })
- 
+
 clr.addEventListener('click', () => {
     displayElement.textContent = "";
     input.length = 0;
@@ -55,7 +55,7 @@ function div(operant, operant2) {
 
 function calculation(operant, operator, operant2) {
     let result = 0;
-    switch(operant) {
+    switch(operator) {
         case('+'):
             result = add(operant, operant2);
             break;
@@ -79,4 +79,16 @@ function display(input) {
     input.forEach(value => {
         displayElement.textContent += value;
     });
+}
+
+function combineInput(input) {
+    let combinedInput = "";
+    let i = 0
+    for (; i < input.length - 1; i++) {
+        combinedInput += input[i];
+    }
+    for(let k = 0; k < i; k++) {
+        input.shift();
+    }
+    input.unshift(`${combinedInput}`);
 }
