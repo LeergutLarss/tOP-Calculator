@@ -71,7 +71,6 @@ function display(input) {
     output.textContent = input.firstValue;
     output.textContent += input.operator;
     output.textContent += input.secondValue;
-    console.log(input);
 }
 
 
